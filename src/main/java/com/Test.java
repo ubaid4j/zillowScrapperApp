@@ -1,8 +1,9 @@
 package com;
 
-import controller.Controller;
+import com.ubaid.app.controller.Controller;
+import com.ubaid.app.model.database.Database;
+
 import javafx.stage.Stage;
-import model.database.Database;
 
 public class Test
 {
