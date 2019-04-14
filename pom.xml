@@ -86,7 +86,7 @@
 	        </descriptorRefs>
 	        <archive>
 	          <manifest>
-	            <mainClass>fully.qualified.MainClass</mainClass>
+	            <mainClass>com.Main</mainClass>
 	          </manifest>
 	        </archive>
 	        <filename>
