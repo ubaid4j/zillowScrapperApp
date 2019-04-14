@@ -11,6 +11,7 @@ import org.bson.conversions.Bson;
 
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.MongoCredential;
 import com.mongodb.client.DistinctIterable;
 import com.mongodb.client.MongoCollection;
@@ -163,8 +164,14 @@ public class Database
 	 */
 	private MongoDatabase getConnection() throws IllegalArgumentException
 	{
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		
+		MongoClientURI uri = new MongoClientURI(
+			    "mongodb+srv://rehman_db_1:guZ15sZw9JuHgLll@cluster0-4brnn.gcp.mongodb.net/test?retryWrites=true");
+		
+		
 		MongoDatabase database = null;
+
+		MongoClient mongoClient = new MongoClient(uri);
 		
 		
 		if(!(databaseFound("zillow_ads", mongoClient)))
