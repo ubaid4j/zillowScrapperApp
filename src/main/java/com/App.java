@@ -1,5 +1,8 @@
 package com;
 
+import java.io.File;
+import java.net.URL;
+
 import controller.Controller;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -21,7 +24,19 @@ public class App extends Application
 	{
 		try
 		{
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/View.fxml"));
+			
+			URL url = getClass().getResource("/view/View.fxml");
+
+			FXMLLoader loader = new FXMLLoader(url);
+
+			
+			File file = new File(url.getPath());
+			
+			if(file.exists())
+				System.out.println("File Exists");
+			else
+				System.out.println("File not exists");
+			
 			Pane rootPane = loader.load();
 			Controller controller = new Controller(primaryStage);
 			controller.setRootPaneController(loader.getController());
