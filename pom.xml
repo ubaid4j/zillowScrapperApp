@@ -67,7 +67,50 @@
     		<version>1.8.3</version>
 		</dependency>
 		
+	<dependency>
+		<groupId>org.ow2.asm</groupId>
+		<artifactId>asm</artifactId>
+		<version>7.0</version>
+	</dependency>
+		
 
   </dependencies>
+  
+  	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.8.0</version>
+				<configuration>
+					<source>11</source>
+					<target>11</target>
+					<release>11</release>
+				</configuration>
+			</plugin>
+
+
+			<plugin>
+			    <groupId>com.jolira</groupId>
+			    <artifactId>onejar-maven-plugin</artifactId>
+			    <executions>
+			        <execution>
+			            <configuration>
+			                <mainClass>org.baeldung.executable.
+			                  ExecutableMavenJar</mainClass>
+			                <attachToBuild>true</attachToBuild>
+			                <filename>
+			                  ${project.build.finalName}.${project.packaging}
+			                </filename>
+			            </configuration>
+			            <goals>
+			                <goal>one-jar</goal>
+			            </goals>
+			        </execution>
+			    </executions>
+			</plugin>
+	
+		</plugins>
+	</build>
   
 </project>

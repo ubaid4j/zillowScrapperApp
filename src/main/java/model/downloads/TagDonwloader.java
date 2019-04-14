@@ -39,8 +39,14 @@ public class TagDonwloader implements Runnable
 					
 					//command
 //					String cmd = "cmd.exe /c start ";
-					String pythonCommand = "python " + "\"" + Constant.getScrapperPath().trim() + "\" " +  "\"" + getDhfts().getTagCollections().get(i) + "\"";
-					String filePath = " " + "\"" + getDhfts().getTagsSearchDir().getAbsolutePath() + "\\" + (getDhfts().getUrl_present_in_database() ? (getDhfts().getLastIndexOfTable() + (i + 1)) : (i + 1) ) + ".html" + "\"";
+					String pythonCommand = "python " + "\"" +
+								Constant.getScrapperPath().trim() + "\" " +  "\"" +
+								getDhfts().getTagCollections().get(i) + "\"";
+	
+					String filePath = " " + "\"" +
+							getDhfts().getTagsSearchDir().getAbsolutePath() + "\\" + 
+							(getDhfts().getUrl_present_in_database() ?
+									(getDhfts().getLastIndexOfTable() + (i + 1)) : (i + 1) ) + ".html" + "\"";
 //					String command = cmd + pythonCommand + filePath;
 					
 					
