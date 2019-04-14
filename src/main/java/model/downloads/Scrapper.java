@@ -239,8 +239,17 @@ public class Scrapper implements Runnable
 			
 			//phone number
 			elements = document.getElementsByClass("phone");
-			String phone = elements.get(elements.size() - 1).text();
-			phone = phoneFormat(phone);
+			String phone = "Unknown";
+			try
+			{
+				phone = elements.get(elements.size() - 1).text();
+				phone = phoneFormat(phone);
+				
+			}
+			catch(IndexOutOfBoundsException exp)
+			{
+				
+			}
 			
 			//Date
 			LocalDate datePosted = toLocalDate(days);
@@ -271,6 +280,12 @@ public class Scrapper implements Runnable
 			
 			return false;
 		}	
+		
+		//TODO remove
+		catch(Exception exp)
+		{
+			return true;
+		}
 		
 		return done;
 	}
