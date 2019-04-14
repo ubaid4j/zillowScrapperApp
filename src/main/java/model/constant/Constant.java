@@ -294,22 +294,15 @@ public class Constant
 		
 		Boolean decision = true;
 		
-		if(!mongo.exists() || !python.exists())
+		
+		if(!python.exists())
 		{
-			if(!mongo.exists())
+			pythonLocation = Constant.getUserPath() +  "\\AppData\\Local\\Programs\\Python\\Python37\\python.exe";
+			python = new File(pythonLocation);
+			if(!(python.exists()))
 			{
-				getAlert("\"" + mongo.getAbsolutePath() +  "\" is not exists\nPlease Install MongoDB 4.0 Enterprise Edition\nContact: urehman.bese16seecs@seecs.edu.pk");
-				decision = false;						
-			}
-			else if(!python.exists())
-			{
-				pythonLocation = Constant.getUserPath() +  "\\AppData\\Local\\Programs\\Python\\Python37\\python.exe";
-				python = new File(pythonLocation);
-				if(!(python.exists()))
-				{
-					getAlert("\"" + python.getAbsolutePath() +  "\" is not exists\nPlease Install Python 3.7.0\nContact: urehman.bese16seecs@seecs.edu.pk");
-					decision = false;														
-				}
+				getAlert("\"" + python.getAbsolutePath() +  "\" is not exists\nPlease Install Python 3.7.0\nContact: urehman.bese16seecs@seecs.edu.pk");
+				decision = false;														
 			}
 		}
 		else
