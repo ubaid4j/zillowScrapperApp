@@ -240,7 +240,7 @@ public class Scrapper implements Runnable
 			}
 			
 			//phone number
-			elements = document.getElementsByClass("cf-mmm-contact");
+			elements = document.getElementsByTag("header");
 			String phone = "Unknown";
 			try
 			{
