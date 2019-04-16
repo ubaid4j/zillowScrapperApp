@@ -48,16 +48,23 @@ public class TagScrapper implements Runnable
 	private String[] getTags() throws IOException
 	{
 		Document document = Jsoup.parse(file, "UTF-8");	
-		Elements anchorTags = document.getElementsByClass("zsg-photo-card-overlay-link");
+		Elements anchorTags = document.getElementsByTag("article");
+		
 		
 		String aTags[] = new String[anchorTags.size()];
 		
 		for(int i = 0; i < anchorTags.size(); i++)
 		{
-			String tag = anchorTags.get(i).attr("href");
-			String initialAddress = "https://www.zillow.com";
-			
-			aTags[i] = initialAddress + tag;
+			try
+			{
+				String tag = anchorTags.get(i).getElementsByTag("a").get(0).absUrl("href");
+//				String initialAddress = "https://www.zillow.com";			
+				aTags[i] = tag;				
+			}
+			catch(Exception exp)
+			{
+				
+			}
 		}
 
 		

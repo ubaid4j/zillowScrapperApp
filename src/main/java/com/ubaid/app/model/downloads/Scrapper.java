@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.ubaid.app.model.constant.Constant;
@@ -70,15 +71,16 @@ public class Scrapper implements Runnable
 			Elements elements = null;
 			
 			//getting address
-			elements = document.getElementsByClass("addr");
-			address = elements.select("h1").text();
+			elements = document.getElementsByClass("ds-address-container");
+			address = elements.text();
 
 			//getting number of beds, baths, and sqft
-			String [] bbs = elements.select("h3").text().split(" ");
+			Elements bathsBedRoomsSQFTInfo = document.getElementsByClass("ds-bed-bath-living-area");
+			
 			
 			try
 			{
-				bed = bbs[0];
+				bed = bathsBedRoomsSQFTInfo.get(0).getElementsByTag("span").get(0).text();
 				
 			}
 			catch(ArrayIndexOutOfBoundsException exp)
@@ -88,7 +90,7 @@ public class Scrapper implements Runnable
 
 			try
 			{
-				bath = bbs[1].substring(4).trim();
+				bath = bathsBedRoomsSQFTInfo.get(1).getElementsByTag("span").get(0).text();
 					
 			}
 			catch(ArrayIndexOutOfBoundsException exp)
@@ -98,7 +100,7 @@ public class Scrapper implements Runnable
 
 			try
 			{
-				sqft = bbs[2].substring(5).trim();
+				sqft = bathsBedRoomsSQFTInfo.get(2).getElementsByTag("span").get(0).text();
 				
 			}
 			catch(ArrayIndexOutOfBoundsException exp)
@@ -143,7 +145,7 @@ public class Scrapper implements Runnable
 			String description = "";
 			
 			//listing type
-			elements = document.getElementsByClass("home-summary-row");
+			elements = document.getElementsByClass("ds-status-details");
 			try
 			{
 				listingType = elements.get(0).text();				
@@ -154,8 +156,8 @@ public class Scrapper implements Runnable
 			}
 			
 			//price
-			elements = document.getElementsByClass("main-row");
-			String price = elements.text();
+			elements = document.getElementsByClass("ds-estimate-value");
+			String price = elements.get(0).text();
 			
 			try
 			{
@@ -168,11 +170,11 @@ public class Scrapper implements Runnable
 			
 			//description
 
-			elements = document.getElementsByClass("zsg-content-item");
+			elements = document.getElementsByClass("character-count-text-fold-container");
 
 			try
 			{
-				description = elements.get(1).text();				
+				description = elements.get(0).text();				
 			}
 			catch(Exception exp)
 			{
@@ -238,7 +240,7 @@ public class Scrapper implements Runnable
 			}
 			
 			//phone number
-			elements = document.getElementsByClass("phone");
+			elements = document.getElementsByClass("cf-mmm-contact");
 			String phone = "Unknown";
 			try
 			{
