@@ -27,13 +27,18 @@ public class Downloader implements Runnable
 	int counter = 1;
 	
 	
+	/**
+	 * constructor
+	 * @param dhfts
+	 */
 	public Downloader(DHFTS dhfts)
 	{
-		
+		//setting instance of class [DHFTS]
 		setDhfts(dhfts);
+		//setting index to 1
 		getDhfts().setIndex(1);
 		
-		//--------
+		//adding threads to pool
 		getDhfts().getController().getPool().addThreadPool(scrapperPool);
 		getDhfts().getController().getPool().addThreadPool(threadPool);
 	}
@@ -61,8 +66,11 @@ public class Downloader implements Runnable
 		//: Step#2: To each search file, run another separate thread
 		File fullSearchDir = getDhfts().getFullSearchDir();
 		File[] hFiles = fullSearchDir.listFiles();
+
+		//now we have created a loop for each full search folder files
 		for(int i = 0; i < hFiles.length; i++)
 		{
+			//for each file, we will retrieve tags of ads in the file
 			TagScrapper scrapper = new TagScrapper(getDhfts(), hFiles[i]);
 			threadPool.execute(scrapper);
 		}
@@ -128,11 +136,10 @@ public class Downloader implements Runnable
 		
 		//--------------------
 		getDhfts().getController().getPool().addThreadPool(threadPool);
-		
-		
+			
 		getDhfts().setIndex(1);
 		
-		//now executing downloadTag class which download all the 
+		//now executing downloadTag class which download all the files associated to each ad
 		TagDonwloader downloader = new TagDonwloader(getDhfts());
 		threadPool.execute(downloader);
 		threadPool.shutdown();		
@@ -141,15 +148,17 @@ public class Downloader implements Runnable
 		
 		Thread.sleep(60000);
 		
+		//iterating all tag collections 
 		for(int i = 0; i < getDhfts().getTagCollections().size(); i++)
 		{
-			String filePath = getDhfts().getTagsSearchDir().getAbsolutePath() + "\\" + (getDhfts().getUrl_present_in_database() ? (getDhfts().getLastIndexOfTable() + (i + 1)) : (i + 1)) + ".html";
+			String filePath = getDhfts().getTagsSearchDir().getAbsolutePath() + "\\" + 
+								(getDhfts().getUrl_present_in_database() ? 
+										(getDhfts().getLastIndexOfTable() + (i + 1)) : (i + 1)) + ".html";
 			File file = new File(filePath);
 			//if tag file exists then 
 
 			if(file.exists())
 			{
-
 				Constant.setLabel("Scraping from " + file.getAbsolutePath() + "/n Stay Calm", getDhfts().getController());
 				Constant.setCounterLabel("Scraping from URL " + (i + 1) + " is completed out of " + getDhfts().getTagCollections().size(), getDhfts().getController());
 				//calling parseInoformation method which execute Scrapper class 
@@ -200,13 +209,15 @@ public class Downloader implements Runnable
 	//this cmd() loop through till all the Search files (pages download)
 	public void cmd()
 	{
-			//command
-//			String cmd = "cmd.exe /c start ";
-			String pythonCommand = "python " + "\"" + Constant.getAppDirectory() + "\\Scrapper.py\" " + "\"" + getDhfts().getUrl() + "\"";
-			String filePath = " " + "\"" + getDhfts().getFullSearchDir().getAbsolutePath() + "\\" + getDhfts().getIndex() + ".html" + "\"";
-//			String command = cmd + pythonCommand + filePath;
+			//python command to download the full search file
+			String pythonCommand = "python " + "\"" +
+					Constant.getAppDirectory() + "\\Scrapper.py\" " + 
+					"\"" + getDhfts().getUrl() + "\"";
 			
-			
+			//path of file, where we are supposed to save our full search file 
+			String filePath = " " + "\"" + getDhfts().getFullSearchDir().getAbsolutePath() + 
+					"\\" + getDhfts().getIndex() + ".html" + "\"";
+						
 			try
 			{
 				//writing the above command in the bat file and then executing this file 
@@ -215,6 +226,7 @@ public class Downloader implements Runnable
 				
 				try
 				{
+					//writing the contents in the bat file 
 					batFile = new File(Constant.getAppDirectory() + "\\fileDonwload.bat");
 					FileUtils.writeStringToFile(batFile, string_to_write, "UTF-8");
 				}
@@ -223,11 +235,14 @@ public class Downloader implements Runnable
 					Constant.getAlert("fileDownload.bat file is not created, there is an error");
 				}
 				
-				@SuppressWarnings("unused")
-				Process child = Runtime.getRuntime().exec(batFile.getAbsolutePath());
-				Constant.setLabel("Downloading " + filePath + "/n Stay Calm", getDhfts().getController());
-				Thread.sleep(15000);
+				//executing the bat file
+				Runtime.getRuntime().exec(batFile.getAbsolutePath());
 				
+				//presenting the info
+				Constant.setLabel("Downloading " + filePath + "/n Stay Calm", getDhfts().getController());
+
+				//sleep for 15 seconds
+				Thread.sleep(15000);
 				
 			}
 			catch (IOException e) 
@@ -245,7 +260,6 @@ public class Downloader implements Runnable
 				//now getting url of next page from the current page
 				String url = urlOfNextPage();
 				
-//				System.out.println(counter++ + " URL" + url);
 				
 				//if url is not null
 				if(url != null)

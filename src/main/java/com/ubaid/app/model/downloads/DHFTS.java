@@ -44,32 +44,51 @@ public class DHFTS implements Runnable
 	@Override
 	public void run()
 	{
+		//after constructor is end, 
+		//now run method will be executing
+		
+		//make a folder for format date+counter
 		File file = new File(Constant.getAppDirectory() + "/" + LocalDate.now() +  Constant.getFolderNumber());
+
+		//if folder will be created then: 
 		if(file.mkdir())
 		{
+			//creating two folders 
+			//full search folder
+			//and tagSearchFolder
 			File fullSearchDir = new File(file.getAbsolutePath() + "/fullSearch");
 			File tagSearchDir = new File(file.getAbsolutePath() + "/tagSearch");
 			
+			//when both these folders created then 
 			if(fullSearchDir.mkdir() & tagSearchDir.mkdir())
 			{
-				Constant.setLabel(fullSearchDir.getAbsolutePath() + " is created \n" + tagSearchDir.getAbsolutePath() + " is created", controller);
+				//presenting info
+				Constant.setLabel(fullSearchDir.getAbsolutePath() + 
+						" is created \n" + tagSearchDir.getAbsolutePath() +
+						" is created", controller);
+
+				//setting the paths of newly created folders 1. full search folder, and 2. tag search folder
 				setFullSearchDir(fullSearchDir);
 				setTagsSearchDir(tagSearchDir);
 			}
 			else
 			{
+				//if these folders can not be created then closing application
 				Constant.getAlert("Cannot be made " + fullSearchDir.getAbsolutePath() + " or " + tagSearchDir.getAbsolutePath());
 				System.exit(0);
 			}
 		}
 		else
 		{
+			//if parent folder cannot be created then closing application
 			Constant.getAlert("Cannot be made " + fullSearchDir.getAbsolutePath());
 			System.exit(0);
 		}
 		
 		//downloading the search files
 		Downloader downloader = new Downloader(this);
+		
+		
 		final ExecutorService threadPool = Executors.newFixedThreadPool(1);
 		threadPool.execute(downloader);
 		controller.getPool().addThreadPool(threadPool);
@@ -81,15 +100,23 @@ public class DHFTS implements Runnable
 	//constructor
 	public DHFTS(String url, Controller controller)
 	{
+		//this is all done in the constructor
+		
+		//when we click on the start button, our controller will arrive here
+		//starting the indicator
 		controller.getRootPaneController().getProgressIndicator().setProgress(ProgressIndicator.INDETERMINATE_PROGRESS);
+
+		//setting variables
 		baseUrl = url;
 		this.controller = controller;
 		setUrl(url);
 		setIndex(1);
 		
+		//emptying collections 
 		tagCollections.removeAllElements();
 		getList().clear();
 		
+		//reseting all things 
 		controller.getRootPaneController().getButton().setDisable(true);
 		controller.getRootPaneController().getRenameButton().setDisable(true);
 		controller.getRootPaneController().getCombobox().setDisable(true);
@@ -99,6 +126,9 @@ public class DHFTS implements Runnable
 		//emptying the table
 		setTableEmpty();
 		
+		//if the the URL is present in the database
+		//mean we have already scraped the data from the given url, then 
+		//calling populate table method 
 		if(controller.getDatabase().isURLPresentInDataBase(baseUrl))
 		{
 			//populating the table with base url data
@@ -110,12 +140,18 @@ public class DHFTS implements Runnable
 			url_present_in_database = false;			
 		}
 		
+		// if url is present in the database [mean we have paste the same url in second[and more] time]
 		if(getUrl_present_in_database())
 		{
+			//getting size of the scraped data
 			int size = getController().getRootPaneController().getTable().getItems().size();
-			setLastIndexOfTable(getController().getRootPaneController().getTable().getItems().get(size - 1).getId());
+			
+			//setting last index of the table
+			setLastIndexOfTable(getController().
+					getRootPaneController().getTable().getItems().get(size - 1).getId());
 		}
 
+		//resetting counter label
 		Constant.setCounterLabel("", controller);
 		
 	}

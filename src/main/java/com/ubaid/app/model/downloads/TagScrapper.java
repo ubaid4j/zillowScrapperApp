@@ -47,28 +47,31 @@ public class TagScrapper implements Runnable
 	
 	private String[] getTags() throws IOException
 	{
+		//parsing document
 		Document document = Jsoup.parse(file, "UTF-8");	
+	
+		//getting all the article tags from the file [full search 1, full search 2 etc]
 		Elements anchorTags = document.getElementsByTag("article");
 		
-		
+		//creating an array
 		String aTags[] = new String[anchorTags.size()];
 		
+		//now adding the href of each aritle in the aTags array
 		for(int i = 0; i < anchorTags.size(); i++)
 		{
 			try
 			{
-				String tag = anchorTags.get(i).getElementsByTag("a").get(0).absUrl("href");
-//				String initialAddress = "https://www.zillow.com";			
-				aTags[i] = tag;				
+				String tag = anchorTags.get(i).getElementsByTag("a").get(0).attr("href");
+				aTags[i] = "https://www.zillow.com" + tag;				
 			}
 			catch(Exception exp)
 			{
-				
+				exp.printStackTrace();
 			}
 		}
 
 		
-		
+		//returning aTags
 		return aTags;
 	}
 

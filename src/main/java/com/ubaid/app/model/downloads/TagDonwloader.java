@@ -1,5 +1,4 @@
- package com.ubaid.app.model.downloads;
-
+package com.ubaid.app.model.downloads;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +37,6 @@ public class TagDonwloader implements Runnable
 				{
 					
 					//command
-//					String cmd = "cmd.exe /c start ";
 					String pythonCommand = "python " + "\"" +
 								Constant.getScrapperPath().trim() + "\" " +  "\"" +
 								getDhfts().getTagCollections().get(i) + "\"";
@@ -47,10 +45,7 @@ public class TagDonwloader implements Runnable
 							getDhfts().getTagsSearchDir().getAbsolutePath() + "\\" + 
 							(getDhfts().getUrl_present_in_database() ?
 									(getDhfts().getLastIndexOfTable() + (i + 1)) : (i + 1) ) + ".html" + "\"";
-//					String command = cmd + pythonCommand + filePath;
-					
-					
-					
+										
 					try
 					{
 						
@@ -70,12 +65,9 @@ public class TagDonwloader implements Runnable
 
 						
 						
-						@SuppressWarnings("unused")
-						Process child = Runtime.getRuntime().exec(batFile.getAbsolutePath());
+						Runtime.getRuntime().exec(batFile.getAbsolutePath());
 						Constant.setLabel("Downloading  ad File " + filePath + "/n Stay Calm", getDhfts().getController());
-//						System.out.println("Line 49: Thread going to sleep of 15 seconds");
 						Thread.sleep(15000);
-//						System.out.println("Line 51: Thread wake up");
 						
 						filePath = filePath.trim();
 						filePath = filePath.substring(1, filePath.length() - 1);

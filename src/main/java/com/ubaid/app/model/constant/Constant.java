@@ -283,12 +283,8 @@ public class Constant
 	 */
 	public static Boolean appStart()
 	{	
-		String mongoLocation = "C:\\Program Files\\MongoDB\\Server\\4.0\\bin\\mongod.exe";
 		String pythonLocation = Constant.getUserPath() +  "\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe";
-//		String dataPath = Constant.getUserPath() + "\\mongoDB\\db";
-//		String command = "start /B call \"C:\\Program Files\\MongoDB\\Server\\4.0\\bin\\mongod.exe\" --dbpath \"" + dataPath + "\"";		
-//		File batFile = new File(Constant.getAppDirectory().getAbsolutePath() + "\\runMongoServer.bat");
-//		File mongo = new File(mongoLocation);
+
 		File python = new File(pythonLocation);
 		File pip_bat_file = new File(Constant.getAppDirectory().getAbsolutePath() + "\\" + "pip.bat");
 		String pip_install_bs4 = "start call pip install beautifulsoup4";
