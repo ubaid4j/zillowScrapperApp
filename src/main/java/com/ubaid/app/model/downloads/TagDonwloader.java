@@ -65,9 +65,15 @@ public class TagDonwloader implements Runnable
 
 						
 						
-						Runtime.getRuntime().exec(batFile.getAbsolutePath());
+						Process process = Runtime.getRuntime().exec(batFile.getAbsolutePath());
+						boolean isAlive = process.isAlive();
+						System.out.println(isAlive);
+						while(isAlive)
+						{
+							Thread.sleep(1500);
+						}
 						Constant.setLabel("Downloading  ad File " + filePath + "/n Stay Calm", getDhfts().getController());
-						Thread.sleep(15000);
+//						Thread.sleep(15000);
 						
 						filePath = filePath.trim();
 						filePath = filePath.substring(1, filePath.length() - 1);
