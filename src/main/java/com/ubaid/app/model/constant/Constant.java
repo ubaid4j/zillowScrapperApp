@@ -282,8 +282,13 @@ public class Constant
 	 * @return if prerequistes are not installed
 	 */
 	public static Boolean appStart()
-	{	
-		String pythonLocation = Constant.getUserPath() +  "\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe";
+	{
+		String pythonLocation = null;
+		if (System. getProperty("os.name").equalsIgnoreCase("Linux")) {
+			pythonLocation = "python3";
+		} else {
+			pythonLocation = Constant.getUserPath() +  "\\AppData\\Local\\Programs\\Python\\Python37-32\\python.exe";
+;		}
 
 		File python = new File(pythonLocation);
 		File pip_bat_file = new File(Constant.getAppDirectory().getAbsolutePath() + "\\" + "pip.bat");

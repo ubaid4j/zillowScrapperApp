@@ -89,9 +89,9 @@
 	            <mainClass>com.Main</mainClass>
 	          </manifest>
 	        </archive>
-	        <filename>
-				${project.build.finalName}.${project.packaging}
-			</filename>
+<!--	        <filename>-->
+<!--				${project.build.finalName}.${project.packaging}-->
+<!--			</filename>-->
 	      </configuration>
 	      <executions>
 	        <execution>

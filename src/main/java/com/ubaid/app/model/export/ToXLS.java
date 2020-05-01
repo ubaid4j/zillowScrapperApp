@@ -63,7 +63,7 @@ public class ToXLS implements Export
 	                	switch (j)
 	                	{
 						case 0:
-							row.createCell(j).setCellValue((int) table.getColumns().get(j).getCellData(i));
+							row.createCell(j).setCellValue((String) table.getColumns().get(j).getCellData(i));
 		                    break;
 
 						case 1:
@@ -71,15 +71,15 @@ public class ToXLS implements Export
 							break;
 
 						case 2:
-							row.createCell(j).setCellValue((int) table.getColumns().get(j).getCellData(i));							
+							row.createCell(j).setCellValue((String) table.getColumns().get(j).getCellData(i));
 							break;
 
 						case 3:
-							row.createCell(j).setCellValue((int) table.getColumns().get(j).getCellData(i));							
+							row.createCell(j).setCellValue((String) table.getColumns().get(j).getCellData(i));
 							break;
 
 						case 4:
-							row.createCell(j).setCellValue((int) table.getColumns().get(j).getCellData(i));							
+							row.createCell(j).setCellValue((String) table.getColumns().get(j).getCellData(i));
 							break;
 
 						case 5:
@@ -91,16 +91,16 @@ public class ToXLS implements Export
 							cellStyle2.setDataFormat((short)6);
 							Cell cell2 = row.createCell(j);
 							cell2.setCellStyle(cellStyle2);
-							cell2.setCellValue((int) table.getColumns().get(j).getCellData(i));
+							cell2.setCellValue((String) table.getColumns().get(j).getCellData(i));
 							break;
 
 						case 7:
 							CellStyle cellStyle3 = workbook.createCellStyle();
 							cellStyle3.setDataFormat((short)8);
 							Cell cell3 = row.createCell(j);
-							cell3.setCellValue((float) table.getColumns().get(j).getCellData(i));
+							cell3.setCellValue((String) table.getColumns().get(j).getCellData(i));
 							cell3.setCellStyle(cellStyle3);
-							cell3.setCellValue((float) table.getColumns().get(j).getCellData(i));
+							cell3.setCellValue((String) table.getColumns().get(j).getCellData(i));
 							break;
 
 						case 8:
@@ -112,7 +112,7 @@ public class ToXLS implements Export
 							break;
 
 						case 10:
-							row.createCell(j).setCellValue((int) table.getColumns().get(j).getCellData(i));
+							row.createCell(j).setCellValue((String) table.getColumns().get(j).getCellData(i));
 							break;
 
 						case 11:
